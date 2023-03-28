@@ -4,7 +4,7 @@
 #
 # This script creates a directory `patches_repo/` which contains patchfiles
 # (diff files) for all remote branches of `repo`. Patchfiles can be used via
-# `git apply /patch/to/patch` to replay the differences in a branch.
+# `git apply /path/to/patch` to replay the differences in a branch.
 #
 # This is useful in cases where the commit history has changed and the local
 # working repo is broken, as it saves time manually replaying all the commits.

@@ -13,7 +13,7 @@
 # Optionally, it renames the tags using standard semantic versioning, and pushes
 # the updated names to the remote repo.
 #
-# The script is split into 8 sections, each doing one task:
+# The script is split into 7 sections, each doing one task:
 #   1. Prompts for remote URL and defines internal variables.
 #   2. Saves a backup of the remote repo locally, which can be used to revert
 #      all the changes should anything go wrong.
@@ -26,6 +26,9 @@
 #      there will be orphaned tags.
 #   7. Pushes the changes to the remote. 
 #      Downloads a fresh clone of the cleaned repo and prints repo size stats.
+#      Note that `bfg` also updates all the hidden refs (such as references to
+#      pull requests). Most hosting websites, including GitHub, do not allow
+#      updating hidden refs, so these will be rejected.
 
 
 ## 1. Repo URL input by user
@@ -93,3 +96,4 @@ echo "Cleaned-up repo cloned in ${NAME}."
 OLD_SIZE=$(du -sh ${NAME}_bak | awk '{print $1}')
 NEW_SIZE=$(du -sh $NAME | awk '{print $1}')
 echo "Repo size reduced from ${OLD_SIZE} to ${NEW_SIZE}."
+cd ..
