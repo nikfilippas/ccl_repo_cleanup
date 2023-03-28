@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Usage: `$ ./cleanup.sh` (prompts for repo URL)
+# Typical runtime ~ 2 min.
 #
 # This script is tailored for use with LSST DESC CCL.
 #
@@ -29,12 +30,18 @@
 #      Note that `bfg` also updates all the hidden refs (such as references to
 #      pull requests). Most hosting websites, including GitHub, do not allow
 #      updating hidden refs, so these will be rejected.
+#
+# Upon completion, local copies of the old remote repo will have divergent
+# branches (there will be no common node in the commit histories). Users have
+# to rebase their local branches `git pull --rebase` before pushing any commits.
 
 
 ## 1. Repo URL input by user
 read -p "Enter repo URL: " URL
 NAME=$(echo $URL | sed 's/.*\///' | sed 's/\.git//')  # extract repo name
-mkdir -p cleanup && cd cleanup  # create an empty directory and switch to it
+dir_name="cleanup"
+[ -d $dir_name ] && echo "Error: ${dir_name}/ already exists." >&2 && exit 1
+mkdir -p $dir_name && cd $dir_name  # create an empty directory and switch to it
 echo "Cleaning up ${NAME} at ${URL}."
 
 

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Usage: `$ ./reset.sh` (prompts for destination & origin repo URLs)
+# Typical runtime ~ 4 min.
 #
 # This script creates an exact replica of a remote repo and pushes it to another
 # remote repo, rewriting the commit history to exactly match the origin repo.

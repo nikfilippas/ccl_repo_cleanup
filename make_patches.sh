@@ -15,6 +15,6 @@ for branch in $(git -C $NAME branch -r | grep -vE "HEAD|master|releases"); do
   echo -n "$branch..."
   branch_name=${branch#origin/}
   # and save the patchfile for later use
-  git -C $NAME diff origin/HEAD..${branch} >> patches_$NAME/$branch_name.patch
+  git -C $NAME diff origin/HEAD..${branch} > patches_$NAME/$branch_name.patch
   echo "done"
 done
