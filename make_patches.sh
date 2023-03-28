@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: `./make_patches.sh /path/to/repo`
+# Usage: `$ ./make_patches.sh /path/to/repo`
 #
 # This script creates a directory `patches_repo/` which contains patchfiles
 # (diff files) for all remote branches of `repo`. Patchfiles can be used via

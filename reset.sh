@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Usage: `./reset.sh` (prompts for destination & origin repo URLs)
+# Usage: `$ ./reset.sh` (prompts for destination & origin repo URLs)
 #
 # This script creates an exact replica of a remote repo and pushes it to another
 # remote repo, rewriting the commit history to exactly match the origin repo.
