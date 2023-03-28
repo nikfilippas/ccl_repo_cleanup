@@ -10,15 +10,19 @@ mkdir -p cleanup && cd cleanup  # create an empty directory and switch to it
 curl https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/bfg-1.14.0.jar --output bfg.jar  # download bfg
 shopt -s expand_aliases && alias bfg="java -jar bfg.jar"  # allow aliases and set `bfg` as an alias for simpler call
 
-## 3. Clean up protected HEAD
+# 3. Create backup
+echo "Cloning & creating backup."
+git clone $URL           # download a fresh clone of the repo
+cp -r $NAME "$NAME"_bak  # create a backup
+
+## 4. Clean up protected HEAD
 echo "Cleaning up HEAD."
-git clone $URL && cp -r $NAME "$NAME"_bak  # download a fresh copy of the repo and keep a backup
 cd $NAME
 rm -r benchmarks/data doc examples                     # remove all the things that take up space
 git add . && git commit -m "REPO CLEANUP" && git push  # commit the changes and push
 cd ..
 
-## 4. Clean up the refs/history of the bare repo
+## 5. Clean up the refs/history of the bare repo
 echo "Cleaning up the refs/history of the local repo."
 git clone --mirror $URL                               # download a bare copy of the repo
 bfg --delete-folders "{data,doc,examples}" $NAME.git  # clean up commit history for the specific directories
@@ -26,8 +30,7 @@ cd $NAME.git
 git reflog expire --expire=now --all                  # expire all the orphaned files from history
 git gc --prune=now --aggressive                       # run the garbage collector to remove expired files
 
-
-## 5. (Optional) Fix tag names using semantic versioning (https://semver.org/)
+## 6. (Optional) Fix tag names using semantic versioning (https://semver.org/)
 for tag_old in $(git tag --sort=-creatordate); do  # loop through the original tags
   tag_new=$tag_old
 
@@ -48,7 +51,7 @@ echo "Updating the refs of the remote repo."
 git push --force  # force-push (because it re-writes commit history)
 cd ..
 
-## 6. Print info
+## 7. Print info
 mv $NAME ${NAME}_old && git clone $URL     # clone the cleaned-up repo
 echo "Cleaned-up repo cloned in ${NAME}."
 
