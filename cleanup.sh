@@ -10,8 +10,8 @@
 # every commit in the history. This also allows it to automatically update all
 # branches, as well as tags.
 #
-# Optionally, it renames the tags using standard semantic versioning, and pushes
-# the updated names to the remote repo.
+# Optionally, it renames the tags using standard [semantic versioning](https://semver.org/),
+# and pushes the updated names to the remote repo.
 #
 # The script is split into 7 sections, each doing one task:
 #   1. Prompts for remote URL and defines internal variables.
@@ -66,7 +66,7 @@ git reflog expire --expire=now --all                  # expire all the orphaned 
 git gc --prune=now --aggressive                       # run the garbage collector to remove expired files
 
 
-## 6. (Optional) Fix tag names using semantic versioning (https://semver.org/)
+## 6. (Optional) Fix tag names using semantic versioning.
 for tag_old in $(git tag --sort=-creatordate); do  # loop through the original tags
   tag_new=$tag_old
 
